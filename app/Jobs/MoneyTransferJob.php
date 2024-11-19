@@ -23,15 +23,13 @@ public $amount;
      */
     public function handle(): void
     {
-        if($this->amount >100){
+        if($this->amount >100 && $this->attempts() < 3){
             throw new \Exception('Amount must be less than 1000');
         }
-        echo " BDT ".$this->amount ." has been transfered your account";
+        echo " BDT ".$this->amount ." has been transfered your account. Attemps: ". $this->attempts();
     }
     public function failed($exception)
     {
-        Mail::send([],[],function($message){
-            $message->to('solaiman.it3@gmail.com')->subject('Money Transfer Failed')->html('Dear, Your Money Transfer has Failed');
-        });
+        echo "BDT".$this->amount ." has been failed to transfer your account. Attemps: ". $this->attempts()." Exception: ". $exception->getMessage();
     }
 }
