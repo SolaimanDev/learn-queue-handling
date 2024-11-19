@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CalculateMarksJobs;
 use Illuminate\Support\Arr;
 use App\Jobs\MoneyTransferJob;
 use App\Jobs\SendMailJob;
@@ -28,12 +29,9 @@ class Generate100QueueJobs extends Command
      */
     public function handle()
     {
-        for ($i = 0; $i <= 10; $i++) {
-            dispatch(new SendMailJob($i));
-        }
+       
+        dispatch(new CalculateMarksJobs());
         
-        for ($i = 0; $i <= 10; $i++) {
-            dispatch(new SendMailJob($i))->onQueue('mail');
-        }
+       
     }
 }
